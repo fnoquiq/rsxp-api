@@ -1,27 +1,27 @@
-const { test, trait } = use("Test/Suite")("Session");
+const { test, trait } = use('Test/Suite')('Session')
 
-const Factory = use("Factory");
+const Factory = use('Factory')
 
-const User = use("App/Models/User");
+const User = use('App/Models/User')
 
-trait("Test/ApiClient");
+trait('Test/ApiClient')
 
-test("it should return JWT token when session created", async ({
+test('it should return JWT token when session created', async ({
   assert,
   client
 }) => {
   const sessionPayload = {
-    email: "gabrielteixeiramesquita@gmail.com",
-    password: "123456"
-  };
+    email: 'gabrielteixeiramesquita@gmail.com',
+    password: '123456'
+  }
 
-  const user = await Factory.model("App/Models/User").create(sessionPayload);
+  await Factory.model('App/Models/User').create(sessionPayload)
 
   const response = await client
-    .post("/sessions")
+    .post('/sessions')
     .send(sessionPayload)
-    .end();
+    .end()
 
-  response.assertStatus(200);
-  assert.exists(response.body.token);
-});
+  response.assertStatus(200)
+  assert.exists(response.body.token)
+})
