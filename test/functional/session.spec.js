@@ -1,10 +1,13 @@
 const { test, trait } = use('Test/Suite')('Session')
 
+/** @typedef {import('@adonisjs/lucid/src/Factory')} Factory */
 const Factory = use('Factory')
 
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const User = use('App/Models/User')
 
 trait('Test/ApiClient')
+trait('DatabaseTransactions')
 
 test('it should return JWT token when session created', async ({
   assert,
