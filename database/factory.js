@@ -22,3 +22,11 @@ Factory.blueprint('App/Models/User', (faker, i, data = {}) => {
     ...data
   }
 })
+
+Factory.blueprint('App/Models/Token', async (faker, i, data = {}) => {
+  return {
+    type: data.type || 'refreshtoken',
+    token: faker.string({ length: 20 }),
+    ...data
+  }
+})
