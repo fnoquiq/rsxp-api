@@ -4,7 +4,7 @@ Estudo do framework AdonisJS com TDD.
 
 ## :hammer: Configurar a aplicação:
 
-- O SGDB desta aplicação é o PostgreSQL, para isso, basta executar em seu terminal o seguinte comando: `sudo docker run --name rsxp-pg -p 5342:5432 -e POSTGRES_PASSWORD=mysecretpassword -d -t kartoza/postgis`. Este comando será responsável por levantar um container docker todo configurado para o uso do PostgreSQL. O banco PG do Kartoza é modificado para suportar algumas funcionalidades que não são possíveis no original, como por exemplo o UUID.
+- O SGDB desta aplicação é o PostgreSQL, para isso, basta executar em seu terminal o seguinte comando: `sudo docker run --name rsxp-pg -p 5432:5432 -e POSTGRES_USER=docker -e POSTGRES_PASS=mysecretpassword -d -t kartoza/postgis`. Este comando será responsável por levantar um container docker todo configurado para o uso do PostgreSQL. O banco PG do Kartoza é modificado para suportar algumas funcionalidades que não são possíveis no original, como por exemplo o UUID.
 
 - Copie o arquivo `.env.example` e renomeie a cópia para `.env.`. Após isso, preencha as informações necessárias dele.
 
