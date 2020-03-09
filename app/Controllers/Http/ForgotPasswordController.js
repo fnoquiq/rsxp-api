@@ -1,29 +1,29 @@
-'use strict'
+'use strict';
 
-const { randomBytes } = require('crypto')
-const { promisify } = require('util')
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
 
-const Mail = use('Mail')
-const Env = use('Env')
+const Mail = use('Mail');
+const Env = use('Env');
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const User = use('App/Models/User')
+const User = use('App/Models/User');
 
 class ForgotPasswordController {
   async store({ request }) {
-    const { email } = request.all(['email'])
+    const { email } = request.all(['email']);
 
-    const user = await User.findByOrFail('email', email)
+    const user = await User.findByOrFail('email', email);
 
-    const random = await promisify(randomBytes)(24)
-    const token = random.toString('hex')
+    const random = await promisify(randomBytes)(24);
+    const token = random.toString('hex');
 
     await user.tokens().create({
       token,
-      type: 'forgotPassword'
-    })
+      type: 'forgotPassword',
+    });
 
-    const resetPasswordUrl = `${Env.get('FRONT_URL')}/reset?token=${token}`
+    const resetPasswordUrl = `${Env.get('FRONT_URL')}/reset?token=${token}`;
 
     await Mail.send(
       'emails.forgotPassword',
@@ -32,10 +32,10 @@ class ForgotPasswordController {
         message
           .to(user.email)
           .from('oi@rocketseat.com.br')
-          .subject('RS/XP Recuperação de senha')
+          .subject('RS/XP Recuperação de senha');
       }
-    )
+    );
   }
 }
 
-module.exports = ForgotPasswordController
+module.exports = ForgotPasswordController;
