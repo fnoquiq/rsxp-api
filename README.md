@@ -30,4 +30,4 @@ Estudo do framework AdonisJS com TDD.
 
 ## :package: Importar configurações do Insomnia
 
-:construction:
+[![Clique aqui para configurar o Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=RSXP-API&uri=https%3A%2F%2Fgithub.com%2Ffnoquiq%2Frsxp-api%2Fblob%2Fmaster%2Finsomnia.json)
