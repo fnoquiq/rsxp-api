@@ -1,8 +1,13 @@
 'use strict';
 
 const { rule } = use('Validator');
+const Antl = use('Antl');
 
 class Workshop {
+  get validateAll() {
+    return true;
+  }
+
   get rules() {
     return {
       title: [rule('required')],
@@ -10,6 +15,10 @@ class Workshop {
       section: [rule('required'), rule('in', [1, 2, 3])],
       user_id: [rule('required'), rule('exists', ['users', 'id'])],
     };
+  }
+
+  get messages() {
+    return Antl.list('validation');
   }
 }
 
