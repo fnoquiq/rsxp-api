@@ -21,4 +21,6 @@ Route.post('/sessions', 'SessionController.store').validator('Session');
 Route.post('/forgot', 'ForgotPasswordController.store').validator('Forgot');
 Route.post('/reset', 'ResetPasswordController.store').validator('Reset');
 
-Route.post('/workshops', 'WorkshopController.store');
+Route.group(() => {
+  Route.post('/workshops', 'WorkshopController.store').validator('Workshop');
+}).middleware('auth');
