@@ -22,7 +22,7 @@ class WorkshopController {
     const workshop = await Workshop.find(params.id);
 
     await workshop.load('user', builder => {
-      builder.select(['id', 'name', 'github', 'linkedin']);
+      builder.select(['id', 'name', 'github', 'linkedin', 'avatar']);
     });
 
     return workshop;
