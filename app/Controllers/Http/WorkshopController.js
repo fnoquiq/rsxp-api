@@ -8,6 +8,16 @@
 const Workshop = use('App/Models/Workshop');
 
 class WorkshopController {
+  async index() {
+    const workshops = await Workshop.query()
+      .with('user', builder => {
+        builder.select(['id', 'name']);
+      })
+      .fetch();
+
+    return workshops;
+  }
+
   async store({ request, response }) {
     const data = request.only(['title', 'description', 'user_id', 'section']);
 

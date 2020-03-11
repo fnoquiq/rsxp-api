@@ -5,12 +5,14 @@ const Factory = use('Factory');
 
 trait('Test/ApiClient');
 trait('DatabaseTransactions');
+trait('Auth/Client');
 
 test('it should be able to create workshops', async ({ assert, client }) => {
   const user = await Factory.model('App/Models/User').create();
 
   const response = await client
     .post('/workshops')
+    .loginVia(user, 'jwt')
     .send({
       title: 'Utilizando NodeJS para construir API`s seguras.',
       description:
@@ -22,4 +24,20 @@ test('it should be able to create workshops', async ({ assert, client }) => {
 
   response.assertStatus(201);
   assert.exists(response.body.id);
+});
+
+test('it should be able to list workshops', async ({ assert, client }) => {
+  const user = await Factory.model('App/Models/User').create();
+  const workshop = await Factory.model('App/Models/Workshop').make();
+  await user.workshops().save(workshop);
+
+  const response = await client
+    .get('/workshops')
+    .loginVia(user, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+
+  assert.equal(response.body[0].title, workshop.title);
+  assert.equal(response.body[0].user.id, user.id);
 });
