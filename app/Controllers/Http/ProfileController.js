@@ -5,6 +5,8 @@ const Helpers = use('Helpers');
 
 class ProfileController {
   async update({ request, auth }) {
+    const data = request.only(['name', 'title', 'bio', 'github', 'linkedin']);
+
     const user = await auth.getUser();
 
     const validationOptions = {
@@ -14,15 +16,25 @@ class ProfileController {
 
     const avatar = request.file('avatar', validationOptions);
 
-    await avatar.move(Helpers.tmpPath('uploads'), {
-      name: `${new Date().getTime()}.${avatar.subtype}`,
-    });
+    if (avatar) {
+      await avatar.move(Helpers.tmpPath('uploads'), {
+        name: `${new Date().getTime()}.${avatar.subtype}`,
+      });
 
-    if (!avatar.moved()) {
-      return avatar.error();
+      if (!avatar.moved()) {
+        return avatar.error();
+      }
+
+      user.avatar = avatar.fileName;
     }
 
-    user.avatar = avatar.fileName;
+    user.merge(data);
+
+    const password = request.input('password');
+
+    if (password) {
+      user.password = password;
+    }
 
     await user.save();
 
