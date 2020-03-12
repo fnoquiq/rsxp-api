@@ -3,6 +3,9 @@ const { test, trait } = use('Test/Suite')('Workshop');
 /** @typedef {import('@adonisjs/lucid/src/Factory')} Factory */
 const Factory = use('Factory');
 
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+const Workshop = use('App/Models/Workshop');
+
 trait('Test/ApiClient');
 trait('DatabaseTransactions');
 trait('Auth/Client');
@@ -61,7 +64,7 @@ test('it should be able to show single workshops', async ({
   assert.equal(response.body.user.id, user.id);
 });
 
-test('it should be able to update workshops', async ({ assert, client }) => {
+test('it should be able to update a workshops', async ({ assert, client }) => {
   const user = await Factory.model('App/Models/User').create();
   const workshop = await Factory.model('App/Models/Workshop').create({
     title: 'Old title',
@@ -79,4 +82,21 @@ test('it should be able to update workshops', async ({ assert, client }) => {
   response.assertStatus(200);
 
   assert.equal(response.body.title, 'New title');
+});
+
+test('it should be able to delete a workshops', async ({ assert, client }) => {
+  const user = await Factory.model('App/Models/User').create();
+  const workshop = await Factory.model('App/Models/Workshop').create();
+
+  const response = await client
+    .delete(`/workshops/${workshop.id}`)
+    .loginVia(user, 'jwt')
+    .send()
+    .end();
+
+  response.assertStatus(204);
+
+  const checkWorkshop = await Workshop.find(workshop.id);
+
+  assert.isNull(checkWorkshop);
 });
