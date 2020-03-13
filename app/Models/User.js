@@ -46,7 +46,7 @@ class User extends Model {
   }
 
   getAvatarUrl({ avatar }) {
-    return `${Env.get('APP_URL')}/files/${avatar}`;
+    return `${Env.get('APP_URL')}/files/${avatar || 'placeholder.png'}`;
   }
 }
 
