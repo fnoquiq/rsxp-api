@@ -29,7 +29,13 @@ class WorkshopController {
   }
 
   async store({ request, response }) {
-    const data = request.only(['title', 'description', 'user_id', 'section']);
+    const data = request.only([
+      'title',
+      'description',
+      'user_id',
+      'section',
+      'color',
+    ]);
 
     const workshop = await Workshop.create(data);
 
@@ -37,7 +43,13 @@ class WorkshopController {
   }
 
   async update({ request, params }) {
-    const data = request.only(['title', 'description', 'user_id', 'section']);
+    const data = request.only([
+      'title',
+      'description',
+      'user_id',
+      'section',
+      'color',
+    ]);
 
     const workshop = await Workshop.find(params.id);
 
