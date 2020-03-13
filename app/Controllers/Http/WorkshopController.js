@@ -8,8 +8,11 @@
 const Workshop = use('App/Models/Workshop');
 
 class WorkshopController {
-  async index() {
+  async index({ request }) {
+    const section = request.input('section', 1);
+
     const workshops = await Workshop.query()
+      .where('section', section)
       .with('user', builder => {
         builder.select(['id', 'name', 'avatar']);
       })
