@@ -8,6 +8,12 @@ class Workshop extends Model {
     return this.belongsTo('App/Models/User');
   }
 
+  subscriptions() {
+    return this.belongsToMany('App/Models/User')
+      .pivotTable('subscriptions')
+      .withTimestamps();
+  }
+
   getSection(section) {
     return Number(section);
   }
